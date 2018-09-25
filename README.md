@@ -1,6 +1,6 @@
 # WhatsApp Web clone
 
-A clone of WhatsApp Web using pure JavaScript
+A clone of WhatsApp Web using pure JavaScript - HCode course.
 
 ## Contributing
 
