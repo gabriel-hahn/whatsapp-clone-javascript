@@ -17,8 +17,13 @@ class WhatsAppController {
             return this;
         }
 
-        Element.prototype.toggle = function () {
+        Element.prototype.toggleClass = function () {
             this.style.display = (this.style.display === 'none') ? 'block' : 'none';
+            return this;
+        }
+
+        Element.prototype.toggle = function () {
+            this.classList.contains('open') ? this.classList.remove('open') : this.classList.add('open');
             return this;
         }
 
@@ -198,6 +203,51 @@ class WhatsAppController {
 
         this.el.btnFinishMicrophone.on('click', e => {
             this.closeRecordMicrophone();
+        });
+
+        this.el.inputText.on('keypress', e => {
+            if (e.key === 'Enter' && !e.ctrlKey) {
+                e.preventDefault();
+                this.el.btnSend.click();
+            }
+        });
+
+        this.el.inputText.on('keyup', e => {
+            if (this.el.inputText.innerHTML.length) {
+                this.el.inputPlaceholder.hide();
+                this.el.btnSendMicrophone.hide();
+                this.el.btnSend.show();
+            }
+            else {
+                this.el.inputPlaceholder.show();
+                this.el.btnSendMicrophone.show();
+                this.el.btnSend.hide();
+            }
+        });
+
+        this.el.btnSend.on('click', e => {
+
+        });
+
+        this.el.btnEmojis.on('click', e => {
+            this.el.panelEmojis.toggle();
+        });
+
+        this.el.panelEmojis.querySelectorAll('.emojik').forEach(emoji => {
+            emoji.on('click', e => {
+                let img = this.el.imgEmojiDefault.cloneNode();
+
+                img.style.cssText = emoji.style.cssText;
+                img.dataset.unicode = emoji.dataset.unicode;
+                img.alt = emoji.dataset.unicode;
+
+                emoji.classList.forEach(name => {
+                    img.classList.add(name);
+                });
+
+                this.el.inputText.appendChild(img);
+                this.el.inputText.dispatchEvent(new Event('keyup'));
+            });
         });
     }
 
