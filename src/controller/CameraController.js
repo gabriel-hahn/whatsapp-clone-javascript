@@ -1,4 +1,4 @@
-class CameraController {
+export default class CameraController {
 
     constructor(videoEl) {
         this._videoEl = videoEl;

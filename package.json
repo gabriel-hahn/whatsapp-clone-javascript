@@ -1,0 +1,25 @@
+{
+  "name": "whatsapp-clone-javascript",
+  "version": "1.0.0",
+  "description": "A clone of WhatsApp Web using pure JavaScript - HCode course.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-hahn/whatsapp-clone-javascript.git"
+  },
+  "keywords": [],
+  "author": "Gabriel Hahn Schaeffer <gabriel_hahn@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabriel-hahn/whatsapp-clone-javascript/issues"
+  },
+  "homepage": "https://github.com/gabriel-hahn/whatsapp-clone-javascript#readme",
+  "devDependencies": {
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1"
+  }
+}
