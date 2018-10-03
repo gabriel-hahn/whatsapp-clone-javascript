@@ -24,6 +24,23 @@ export default class Firebase {
         }
     }
 
+    initAuth() {
+        return new Promise((s, f) => {
+            var provider = new firebase.auth.GoogleAuthProvider();
+
+            firebase.auth().signInWithPopup(provider).then(result => {
+                let token = result.credential.accessToken;
+                let user = result.user;
+                s({
+                    user,
+                    token
+                });
+            }).catch(err => {
+                f(err);
+            })
+        });
+    }
+
     static db() {
         return firebase.firestore();
     }
