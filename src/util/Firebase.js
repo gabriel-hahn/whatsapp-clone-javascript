@@ -4,7 +4,9 @@ require('firebase/firestore');
 export default class Firebase {
 
     constructor() {
-        //Your Firebase config here :)
+        this._config = {
+            //Your Firebase config here :)
+        };
 
         this.init();
     }

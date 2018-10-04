@@ -52,7 +52,7 @@ export default class User extends Model {
     }
 
     static findByEmail(email) {
-        return User.getRef().doc();
+        return User.getRef().doc(email);
     }
 
 }
