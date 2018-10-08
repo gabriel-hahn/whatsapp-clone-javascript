@@ -34,6 +34,9 @@ export default class WhatsAppController {
                     photoMini.src = data.photo;
                     photoMini.show();
                 }
+
+                this.initContacts();
+
             });
 
             this._user.name = response.user.displayName;
@@ -49,6 +52,40 @@ export default class WhatsAppController {
         }).catch(err => {
             console.error(err);
         });
+    }
+
+    initContacts() {
+        //Element to copy each time that add a chat
+        var contactItem = document.getElementById('contact-item');
+
+        this._user.on('contactschange', docs => {
+            this.el.contactsMessagesList.innerHTML = '';
+
+            docs.forEach(doc => {
+                let contact = doc.data();
+                let div = contactItem.cloneNode(true);
+
+                //Change the contact-item to new contact
+                if (contact.photo) {
+                    let img = div.querySelector('.photo');
+                    img.src = contact.photo;
+                    img.show();
+                }
+
+                let name = div.querySelector('._1wjpf');
+                name.innerHTML = contact.name;
+
+                let messageTime = div.querySelector('._3T2VG');
+                messageTime.innerHTML = contact.lastMessageTime;
+
+                let lastMessage = div.querySelector('._3NFp9');
+                lastMessage.innerHTML = contact.lastMessage;
+
+                this.el.contactsMessagesList.appendChild(div);
+            });
+        });
+
+        this._user.getContacts();
     }
 
     elementsPrototype() {
@@ -171,6 +208,22 @@ export default class WhatsAppController {
         this.el.formPanelAddContact.on('submit', e => {
             e.preventDefault();
             let formData = new FormData(this.el.formPanelAddContact);
+
+            //Verify if the new contact exists.
+            let contact = new User(formData.get('email'));
+
+            contact.on('datachange', data => {
+                if (data.name) {
+                    this._user.addContact(contact).then(() => {
+                        this.el.btnClosePanelAddContact.click();
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                }
+                else {
+                    console.error('Usuário não encontrado!');
+                }
+            });
         });
 
         this.el.contactsMessagesList.querySelectorAll('.contact-item').forEach(item => {

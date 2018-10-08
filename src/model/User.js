@@ -55,4 +55,33 @@ export default class User extends Model {
         return User.getRef().doc(email);
     }
 
+    getContactRef(id) {
+        return User.getRef()
+            .doc(id)
+            .collection('contacts');
+    }
+
+    addContact(contact) {
+        return this.getContactRef(this.email)
+            .doc(btoa(contact.email))
+            .set(contact.toJSON());
+    }
+
+    getContacts() {
+        return new Promise((s, f) => {
+            this.getContactRef(this.email).onSnapshot(docs => {
+                let contacts = [];
+                docs.forEach(doc => {
+                    let data = doc.data();
+                    data.id = doc.id;
+                    contacts.push(data);
+                });
+
+                this.trigger('contactschange', docs);
+
+                s(contacts);
+            })
+        });
+    }
+
 }
