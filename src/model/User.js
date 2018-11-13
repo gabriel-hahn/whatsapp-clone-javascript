@@ -75,9 +75,9 @@ export default class User extends Model {
             .set(contact.toJSON());
     }
 
-    getContacts() {
+    getContacts(filter = '') {
         return new Promise((s, f) => {
-            this.getContactRef(this.email).onSnapshot(docs => {
+            this.getContactRef(this.email).where('name', '>=', filter).onSnapshot(docs => {
                 let contacts = [];
                 docs.forEach(doc => {
                     let data = doc.data();

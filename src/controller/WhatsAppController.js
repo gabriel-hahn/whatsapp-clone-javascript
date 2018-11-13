@@ -167,6 +167,17 @@ export default class WhatsAppController {
     }
 
     initEvents() {
+        this.el.inputSearchContacts.on('keyup', e => {
+            if (this.el.inputSearchContacts.value.length > 0) {
+                this.el.inputSearchContactsPlaceholder.hide();
+            }
+            else {
+                this.el.inputSearchContactsPlaceholder.show();
+            }
+
+            this._user.getContacts(this.el.inputSearchContacts.value);
+        });
+
         this.el.myPhoto.on('click', e => {
             this.closeAllLeftPanel();
             this.el.panelEditProfile.show();
