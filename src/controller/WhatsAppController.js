@@ -405,7 +405,6 @@ export default class WhatsAppController {
         });
 
         this.el.btnSend.on('click', e => {
-            console.log(this.el.inputText.innerHTML);
             Message.send(this._contactActive.chatId, this._user.email, 'text', this.el.inputText.innerHTML);
 
             this.el.inputText.innerHTML = '';
@@ -472,8 +471,13 @@ export default class WhatsAppController {
             display: 'flex'
         });
 
+        this.el.panelMessagesContainer.innerHTML = '';
+
         Message.getRef(this._contactActive.chatId).orderBy('timeStamp').onSnapshot(docs => {
-            this.el.panelMessagesContainer.innerHTML = '';
+            //Verify the scroll behaviors
+            let scrollTop = this.el.panelMessagesContainer.scrollTop;
+            let scrollTopMax = this.el.panelMessagesContainer.scrollHeight - this.el.panelMessagesContainer.offsetHeight;
+            let autoScroll = (scrollTop >= scrollTopMax);
 
             docs.forEach(doc => {
                 let data = doc.data();
@@ -487,6 +491,13 @@ export default class WhatsAppController {
                     this.el.panelMessagesContainer.appendChild(view);
                 }
             });
+
+            if (autoScroll) {
+                this.el.panelMessagesContainer.scrollTop = this.el.panelMessagesContainer.scrollHeight - this.el.panelMessagesContainer.offsetHeight;
+            }
+            else {
+                this.el.panelMessagesContainer.scrollTop = scrollTop;
+            }
         });
     }
 
