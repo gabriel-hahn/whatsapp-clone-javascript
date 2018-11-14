@@ -2,6 +2,27 @@
 
 A clone of WhatsApp Web using pure JavaScript + Firebase and Auth - HCode course.
 
+## Getting Started
+
+Add your Firebase config in Firebase.js constructor.
+
+```jsx
+...
+constructor() {
+    this._config = {
+        //Your Firebase config here :)
+    };
+
+    this.init();
+}
+...
+```
+Run the follow commands and the project will open on port 8080.
+
+```sh
+$ npm install && npm run start
+```
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
