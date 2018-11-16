@@ -4,7 +4,7 @@ A clone of WhatsApp Web using pure JavaScript + Firebase and Auth - HCode course
 
 ## Getting Started
 
-Add your Firebase config in Firebase.js constructor.
+Add your Firebase config in Firebase.js constructor, with Firebase bucket path as well.
 
 ```jsx
 ...
