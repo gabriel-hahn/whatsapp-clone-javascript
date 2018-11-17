@@ -300,7 +300,7 @@ export default class Message extends Model {
         return new Promise((s, f) => {
             let uploadTask = Firebase.hd().ref(from).child(Date.now() + '_' + file.name).put(file);
             uploadTask.on('state_changed', e => {
-                console.info('Upload', e);
+                //console.info('Upload', e);
             }, err => {
                 console.error(err);
             }, () => {
