@@ -8,6 +8,7 @@ import User from './../model/User';
 import Chat from './../model/Chat';
 import Message from './../model/Message';
 import Base64 from '../util/Base64';
+import Upload from '../util/Upload';
 
 export default class WhatsAppController {
 
@@ -80,7 +81,7 @@ export default class WhatsAppController {
                 name.innerHTML = contact.name;
 
                 let messageTime = div.querySelector('._3T2VG');
-                messageTime.innerHTML = contact.lastMessageTime;
+                messageTime.innerHTML = Format.timeStampToTime(contact.lastMessageTime);
 
                 let lastMessage = div.querySelector('._3NFp9');
                 lastMessage.innerHTML = contact.lastMessage;
@@ -207,6 +208,20 @@ export default class WhatsAppController {
 
         this.el.photoContainerEditProfile.on('click', e => {
             this.el.inputProfilePhoto.click();
+        });
+
+        this.el.inputProfilePhoto.on('change', e => {
+            if (this.el.inputProfilePhoto.files.length > 0) {
+                let file = this.el.inputProfilePhoto.files[0];
+                Upload.send(file, this._user.email).then(uploadTask => {
+                    uploadTask.ref.getDownloadURL().then(downloadURL => {
+                        this._user.photo = downloadURL;
+                        this._user.save().then(() => {
+                            this.el.btnClosePanelEditProfile.click();
+                        });
+                    });
+                });
+            }
         });
 
         this.el.inputNamePanelEditProfile.on('keypress', e => {
