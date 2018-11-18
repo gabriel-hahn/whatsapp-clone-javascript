@@ -157,10 +157,6 @@ export default class Message extends Model {
                     img.show();
                 }
 
-                div.querySelector('.btn-message-send').on('click', e => {
-
-                });
-
                 break;
             case 'image':
                 div.innerHTML = `
