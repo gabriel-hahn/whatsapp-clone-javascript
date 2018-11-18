@@ -559,7 +559,7 @@ export default class WhatsAppController {
             display: 'flex'
         });
 
-        this.el.panelMessagesContainer.innerHTML = '';
+        this.el.panelMessagesContainer.innerHTML = '<br/>';
 
         Message.getRef(this._contactActive.chatId).orderBy('timeStamp').onSnapshot(docs => {
             //Verify the scroll behaviors
